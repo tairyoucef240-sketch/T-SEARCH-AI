@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>T-SEARCH AI</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#08111f;color:#f4f7ff;font-family:Arial,sans-serif}
+header{padding:22px 18px;border-bottom:1px solid #24334b;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:bold;color:#50aaff}
+.logo span{color:white}
+.tag{font-size:12px;color:#9db3d1;margin-top:5px}
+main{max-width:750px;margin:35px auto;padding:16px}
+.hero{text-align:center;margin-bottom:30px}
+.hero h1{font-size:29px;margin-bottom:12px}
+.hero h1 span{color:#50aaff}
+.hero p{color:#9aacc5;line-height:1.8}
+.panel{background:#111e31;border:1px solid #283b57;border-radius:17px;padding:22px}
+label{display:block;margin:18px 0 9px;font-weight:bold}
+input,select,textarea{width:100%;padding:14px;background:#091526;color:white;border:1px solid #344966;border-radius:10px;font-size:15px;outline:none}
+textarea{height:125px;resize:vertical}
+select{margin-bottom:3px}
+button{width:100%;padding:16px;margin-top:23px;background:linear-gradient(90deg,#1677e8,#36a9ff);color:white;border:0;border-radius:11px;font-size:17px;font-weight:bold;cursor:pointer}
+button:active{opacity:.8}
+.note{font-size:12px;color:#9aacc5;line-height:1.8;margin-top:16px}
+.result{display:none;margin-top:20px;background:#091526;padding:18px;border-radius:12px;line-height:1.9;white-space:pre-wrap}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
+.feature{background:#111e31;border:1px solid #283b57;padding:17px;border-radius:12px;text-align:center;color:#c9d8ec}
+.feature b{display:block;color:#50aaff;margin-bottom:8px}
+footer{text-align:center;color:#8194ae;padding:30px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+ <div>
+  <div class="logo">T-SEARCH <span>AI</span></div>
+  <div class="tag">مساعدك الذكي للبحوث الجامعية</div>
+ </div>
+ <div>🎓</div>
+</header>
+<main>
+ <section class="hero">
+  <h1>أنجز بحثك الجامعي <span>بذكاء</span></h1>
+  <p>اكتب موضوع بحثك، حدد تخصصك، ودع T-SEARCH يساعدك في إعداد خطة بحث منظمة والبحث عن المراجع الأكاديمية.</p>
+ </section>
+
+ <section class="panel">
+  <h2>📝 إنشاء بحث جديد</h2>
+  <label>موضوع البحث</label>
+  <textarea id="topic" placeholder="مثال: دور التسويق الرقمي في تحسين أداء المؤسسات الاقتصادية..."></textarea>
+
+  <label>التخصص الجامعي</label>
+  <select id="field">
+   <option>العلوم التجارية</option>
+   <option>علوم التسيير</option>
+   <option>العلوم الاقتصادية</option>
+   <option>الحقوق</option>
+   <option>الإعلام والاتصال</option>
+   <option>العلوم الإنسانية</option>
+   <option>علوم أخرى</option>
+  </select>
+
+  <label>المستوى الدراسي</label>
+  <select id="level">
+   <option>ليسانس</option>
+   <option>ماستر</option>
+   <option>دكتوراه</option>
+  </select>
+
+  <label>لغة البحث</label>
+  <select id="language">
+   <option value="العربية">العربية</option>
+   <option value="الفرنسية">الفرنسية</option>
+   <option value="الإنجليزية">الإنجليزية</option>
+  </select>
+
+  <label>نظام التوثيق</label>
+  <select id="citation">
+   <option>APA</option>
+   <option>Harvard</option>
+   <option>Chicago</option>
+  </select>
+
+  <button onclick="generate()">✨ إنشاء خطة البحث</button>
+  <div class="note">يمكنك البدء مجاناً. سيتم توفير البحث بالمصادر الحقيقية بعد ربط الموقع بمحرك الذكاء الاصطناعي وقواعد البيانات الأكاديمية.</div>
+  <div class="result" id="result"></div>
+ </section>
+
+ <section class="features">
+  <div class="feature"><b>📚 مصادر أكاديمية</b>مراجع ودراسات موثوقة</div>
+  <div class="feature"><b>🤖 ذكاء اصطناعي</b>مساعد للكتابة والبحث</div>
+  <div class="feature"><b>🌍 عدة لغات</b>العربية والفرنسية والإنجليزية</div>
+  <div class="feature"><b>📄 تصدير الملفات</b>Word و PDF</div>
+ </section>
+</main>
+<footer>
+ T-SEARCH AI © 2026 - منصة البحث العلمي الذكي
+</footer>
+<script>
+function generate(){
+ const topic=document.getElementById('topic').value.trim();
+ const field=document.getElementById('field').value;
+ const level=document.getElementById('level').value;
+ const lang=document.getElementById('language').value;
+ const citation=document.getElementById('citation').value;
+ const result=document.getElementById('result');
+ if(!topic){
+  alert('من فضلك اكتب موضوع البحث أولا');
+  return;
+ }
+ result.style.display='block';
+ result.textContent=
+ 'تم استلام موضوع البحث بنجاح!\\n\\n'+
+ 'موضوع البحث: '+topic+'\\n'+
+ 'التخصص: '+field+'\\n'+
+ 'المستوى: '+level+'\\n'+
+ 'اللغة: '+lang+'\\n'+
+ 'التوثيق: '+citation+'\\n\\n'+
+ 'المرحلة الأولى من T-SEARCH AI جاهزة.\\n'+
+ 'سيتم تفعيل توليد خطة البحث والبحوث الكاملة بعد ربط محرك الذكاء الاصطناعي وقواعد المراجع الأكاديمية.';
+}
+</script>
+</body>
+</html>
