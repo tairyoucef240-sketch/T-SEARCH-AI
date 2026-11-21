@@ -1,125 +1,152 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>T-SEARCH AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#08111f">
+<title>T-SEARCH AI | مساعد البحث الجامعي</title>
 <style>
+:root{--bg:#08111f;--panel:#111e31;--field:#091526;--line:#2b405e;--blue:#2698ff;--muted:#a8bad2;--white:#f5f8ff}
 *{box-sizing:border-box}
-body{margin:0;background:#08111f;color:#f4f7ff;font-family:Arial,sans-serif}
-header{padding:22px 18px;border-bottom:1px solid #24334b;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:24px;font-weight:bold;color:#50aaff}
-.logo span{color:white}
-.tag{font-size:12px;color:#9db3d1;margin-top:5px}
-main{max-width:750px;margin:35px auto;padding:16px}
-.hero{text-align:center;margin-bottom:30px}
-.hero h1{font-size:29px;margin-bottom:12px}
-.hero h1 span{color:#50aaff}
-.hero p{color:#9aacc5;line-height:1.8}
-.panel{background:#111e31;border:1px solid #283b57;border-radius:17px;padding:22px}
-label{display:block;margin:18px 0 9px;font-weight:bold}
-input,select,textarea{width:100%;padding:14px;background:#091526;color:white;border:1px solid #344966;border-radius:10px;font-size:15px;outline:none}
-textarea{height:125px;resize:vertical}
-select{margin-bottom:3px}
-button{width:100%;padding:16px;margin-top:23px;background:linear-gradient(90deg,#1677e8,#36a9ff);color:white;border:0;border-radius:11px;font-size:17px;font-weight:bold;cursor:pointer}
-button:active{opacity:.8}
-.note{font-size:12px;color:#9aacc5;line-height:1.8;margin-top:16px}
-.result{display:none;margin-top:20px;background:#091526;padding:18px;border-radius:12px;line-height:1.9;white-space:pre-wrap}
-.features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}
-.feature{background:#111e31;border:1px solid #283b57;padding:17px;border-radius:12px;text-align:center;color:#c9d8ec}
-.feature b{display:block;color:#50aaff;margin-bottom:8px}
-footer{text-align:center;color:#8194ae;padding:30px;font-size:12px}
+body{margin:0;background:var(--bg);color:var(--white);font-family:Arial,Tahoma,sans-serif;line-height:1.7}
+header{padding:18px 5%;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:24px;font-weight:800;letter-spacing:.3px;color:#55adff}.logo span{color:white}
+.tag{font-size:12px;color:var(--muted)}
+main{max-width:850px;margin:34px auto;padding:0 16px}
+.hero{text-align:center;margin-bottom:26px}.hero h1{font-size:clamp(25px,5vw,38px);line-height:1.4}.hero h1 span{color:#55adff}
+.hero p{color:var(--muted);font-size:16px}
+.panel,.result-card,.feature{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:20px;margin-bottom:18px}
+h2{font-size:23px;margin:0 0 14px}
+label{display:block;font-weight:700;margin:16px 0 7px}
+input,select,textarea{width:100%;padding:14px;background:var(--field);color:var(--white);border:1px solid #3a5274;border-radius:11px;font-size:16px;font-family:inherit}
+textarea{min-height:115px;resize:vertical}
+button{border:0;border-radius:11px;padding:14px 18px;font-size:16px;font-weight:700;cursor:pointer}
+.primary{width:100%;margin-top:20px;color:white;background:linear-gradient(90deg,#1478e8,#32aaff)}
+.secondary{background:#1b3553;color:#eaf4ff;border:1px solid #3a5274}
+button:disabled{opacity:.55;cursor:wait}
+.hint,.small{font-size:13px;color:var(--muted)}
+.result-card{display:none;white-space:normal}
+.result-card h3{margin-top:0;color:#69b8ff}
+.result-card ol{padding-right:23px}
+.source{padding:12px 0;border-bottom:1px solid var(--line)}
+.source:last-child{border:0}
+.source a{color:#7fc2ff;text-decoration:none}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.feature{text-align:center;color:#d6e3f4;margin:0;padding:16px}
+.feature b{display:block;color:#66b7ff;margin-bottom:5px}
+.status{margin-top:12px;color:var(--muted);font-size:13px}
+footer{text-align:center;color:#8297b4;padding:28px 12px;font-size:12px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.panel{padding:16px}.hero p{font-size:14px}}
 </style>
 </head>
 <body>
 <header>
- <div>
-  <div class="logo">T-SEARCH <span>AI</span></div>
-  <div class="tag">مساعدك الذكي للبحوث الجامعية</div>
- </div>
- <div>🎓</div>
+ <div><div class="logo">T-SEARCH <span>AI</span></div><div class="tag">مساعدك الذكي للبحوث الجامعية</div></div>
+ <div aria-hidden="true">🎓</div>
 </header>
 <main>
  <section class="hero">
   <h1>أنجز بحثك الجامعي <span>بذكاء</span></h1>
-  <p>اكتب موضوع بحثك، حدد تخصصك، ودع T-SEARCH يساعدك في إعداد خطة بحث منظمة والبحث عن المراجع الأكاديمية.</p>
+  <p>نظّم موضوعك، أنشئ خطة أولية، وابحث عن مراجع أكاديمية قابلة للتحقق.</p>
  </section>
 
  <section class="panel">
   <h2>📝 إنشاء بحث جديد</h2>
-  <label>موضوع البحث</label>
-  <textarea id="topic" placeholder="مثال: دور التسويق الرقمي في تحسين أداء المؤسسات الاقتصادية..."></textarea>
-
-  <label>التخصص الجامعي</label>
+  <label for="topic">موضوع البحث</label>
+  <textarea id="topic" placeholder="مثال: أثر التسويق الرقمي على أداء المؤسسات الاقتصادية"></textarea>
+  <label for="field">التخصص الجامعي</label>
   <select id="field">
-   <option>العلوم التجارية</option>
-   <option>علوم التسيير</option>
-   <option>العلوم الاقتصادية</option>
-   <option>الحقوق</option>
-   <option>الإعلام والاتصال</option>
-   <option>العلوم الإنسانية</option>
-   <option>علوم أخرى</option>
+   <option>العلوم التجارية</option><option>علوم التسيير</option><option>العلوم الاقتصادية</option>
+   <option>الحقوق</option><option>الإعلام والاتصال</option><option>العلوم الإنسانية</option><option>تخصص آخر</option>
   </select>
-
-  <label>المستوى الدراسي</label>
-  <select id="level">
-   <option>ليسانس</option>
-   <option>ماستر</option>
-   <option>دكتوراه</option>
-  </select>
-
-  <label>لغة البحث</label>
-  <select id="language">
-   <option value="العربية">العربية</option>
-   <option value="الفرنسية">الفرنسية</option>
-   <option value="الإنجليزية">الإنجليزية</option>
-  </select>
-
-  <label>نظام التوثيق</label>
-  <select id="citation">
-   <option>APA</option>
-   <option>Harvard</option>
-   <option>Chicago</option>
-  </select>
-
-  <button onclick="generate()">✨ إنشاء خطة البحث</button>
-  <div class="note">يمكنك البدء مجاناً. سيتم توفير البحث بالمصادر الحقيقية بعد ربط الموقع بمحرك الذكاء الاصطناعي وقواعد البيانات الأكاديمية.</div>
-  <div class="result" id="result"></div>
+  <label for="level">المستوى الدراسي</label>
+  <select id="level"><option>ليسانس</option><option>ماستر</option><option>دكتوراه</option></select>
+  <label for="language">لغة البحث</label>
+  <select id="language"><option>العربية</option><option>الفرنسية</option><option>الإنجليزية</option></select>
+  <label for="citation">نظام التوثيق</label>
+  <select id="citation"><option>APA</option><option>Harvard</option><option>Chicago</option></select>
+  <button class="primary" id="planBtn" onclick="makePlan()">✨ إنشاء خطة أولية</button>
+  <p class="hint">هذه النسخة تنشئ مخططاً أولياً وتبحث عن سجلات منشورة عبر Crossref. توليد البحث الكامل بالذكاء الاصطناعي يحتاج ربط خادم آمن بمفتاح API؛ لا تضع مفتاحك السري داخل هذا الملف.</p>
+  <div class="status" id="status" role="status"></div>
  </section>
 
- <section class="features">
-  <div class="feature"><b>📚 مصادر أكاديمية</b>مراجع ودراسات موثوقة</div>
-  <div class="feature"><b>🤖 ذكاء اصطناعي</b>مساعد للكتابة والبحث</div>
+ <section class="result-card" id="planResult" aria-live="polite">
+  <h3>📑 الخطة الأولية المقترحة</h3>
+  <div id="planText"></div>
+ </section>
+
+ <section class="result-card" id="sourcesResult" aria-live="polite">
+  <h3>📚 سجلات أكاديمية من Crossref</h3>
+  <div id="sourcesList"></div>
+ </section>
+
+ <section class="grid">
+  <div class="feature"><b>📚 مراجع قابلة للتحقق</b>بيانات منشورات وروابط DOI</div>
+  <div class="feature"><b>🧭 خطة منظمة</b>مقدمة ومحاور وخاتمة</div>
   <div class="feature"><b>🌍 عدة لغات</b>العربية والفرنسية والإنجليزية</div>
-  <div class="feature"><b>📄 تصدير الملفات</b>Word و PDF</div>
+  <div class="feature"><b>🔒 حماية المفاتيح</b>الربط بالذكاء الاصطناعي عبر خادم آمن</div>
  </section>
 </main>
-<footer>
- T-SEARCH AI © 2026 - منصة البحث العلمي الذكي
-</footer>
+<footer>T-SEARCH AI © 2026 — أداة مساعدة للبحث الأكاديمي</footer>
 <script>
-function generate(){
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function makePlan(){
  const topic=document.getElementById('topic').value.trim();
+ if(!topic){alert('اكتب موضوع البحث أولاً');return;}
  const field=document.getElementById('field').value;
  const level=document.getElementById('level').value;
- const lang=document.getElementById('language').value;
+ const language=document.getElementById('language').value;
  const citation=document.getElementById('citation').value;
- const result=document.getElementById('result');
- if(!topic){
-  alert('من فضلك اكتب موضوع البحث أولا');
-  return;
+ const plan=[
+  'مقدمة عامة حول الموضوع',
+  'الفصل الأول: الإطار النظري والمفاهيمي',
+  'المبحث الأول: المفاهيم والتعريفات الأساسية',
+  'المبحث الثاني: النظريات والدراسات السابقة',
+  'الفصل الثاني: الإطار التطبيقي أو التحليلي',
+  'المبحث الأول: عرض وتحليل المعطيات',
+  'المبحث الثاني: مناقشة النتائج',
+  'خاتمة تتضمن النتائج والتوصيات'
+ ];
+ document.getElementById('planText').innerHTML=
+  '<p><b>الموضوع:</b> '+escapeHTML(topic)+'</p>'+
+  '<p><b>التخصص:</b> '+escapeHTML(field)+' — <b>المستوى:</b> '+escapeHTML(level)+'</p>'+
+  '<p><b>اللغة:</b> '+escapeHTML(language)+' — <b>التوثيق:</b> '+escapeHTML(citation)+'</p>'+
+  '<ol>'+plan.map(x=>'<li>'+escapeHTML(x)+'</li>').join('')+'</ol>'+
+  '<p class="hint">هذه خطة عامة قابلة للتعديل وليست خطة مولّدة بنموذج ذكاء اصطناعي. راجعها مع مشرفك ومتطلبات جامعتك.</p>';
+ document.getElementById('planResult').style.display='block';
+ document.getElementById('sourcesResult').style.display='block';
+ document.getElementById('sourcesList').textContent='جارٍ البحث عن مراجع مرتبطة بالموضوع…';
+ document.getElementById('status').textContent='تم إنشاء الخطة الأولية. جارٍ البحث عن سجلات المراجع.';
+ searchSources(topic);
+}
+async function searchSources(topic){
+ const list=document.getElementById('sourcesList');
+ const btn=document.getElementById('planBtn');
+ btn.disabled=true;
+ try{
+  const url='https://api.crossref.org/works?query='+encodeURIComponent(topic)+'&rows=6&select=title,author,published,container-title,DOI,URL,type';
+  const response=await fetch(url,{headers:{'Accept':'application/json'}});
+  if(!response.ok) throw new Error('تعذر الوصول إلى قاعدة البيانات');
+  const data=await response.json();
+  const items=(data.message&&data.message.items)||[];
+  if(!items.length){list.textContent='لم نعثر على نتائج مناسبة. جرّب موضوعاً آخر أو كلمات مفتاحية بالإنجليزية.';return;}
+  list.innerHTML=items.map(item=>{
+   const title=(item.title&&item.title[0])||'عنوان غير متوفر';
+   const authors=(item.author||[]).slice(0,3).map(a=>[a.given,a.family].filter(Boolean).join(' ')).join('، ');
+   const year=item.published&&item.published['date-parts']&&item.published['date-parts'][0]&&item.published['date-parts'][0][0];
+   const journal=(item['container-title']&&item['container-title'][0])||'';
+   const doi=item.DOI;
+   const href=doi?'https://doi.org/'+encodeURIComponent(doi):item.URL;
+   return '<div class="source"><b>'+escapeHTML(title)+'</b><div class="small">'+escapeHTML(authors||'المؤلف غير محدد')+(year?' — '+escapeHTML(year):'')+(journal?' — '+escapeHTML(journal):'')+'</div>'+(href?'<a href="'+escapeHTML(href)+'" target="_blank" rel="noopener">فتح سجل المصدر</a>':'')+'</div>';
+  }).join('');
+ }catch(error){
+  list.textContent='تعذر جلب المراجع حالياً. تحقق من اتصال الإنترنت وحاول لاحقاً. لا تُعدّ هذه الصفحة مصدراً بديلاً عن التحقق من بيانات المرجع.';
+ }finally{
+  btn.disabled=false;
+  document.getElementById('status').textContent='انتهى البحث عن سجلات Crossref.';
  }
- result.style.display='block';
- result.textContent=
- 'تم استلام موضوع البحث بنجاح!\\n\\n'+
- 'موضوع البحث: '+topic+'\\n'+
- 'التخصص: '+field+'\\n'+
- 'المستوى: '+level+'\\n'+
- 'اللغة: '+lang+'\\n'+
- 'التوثيق: '+citation+'\\n\\n'+
- 'المرحلة الأولى من T-SEARCH AI جاهزة.\\n'+
- 'سيتم تفعيل توليد خطة البحث والبحوث الكاملة بعد ربط محرك الذكاء الاصطناعي وقواعد المراجع الأكاديمية.';
 }
 </script>
 </body>
